@@ -1,7 +1,10 @@
 package br.insper.cursos.courses;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -9,6 +12,8 @@ import java.util.List;
 @RequestMapping("/courses")
 @CrossOrigin(origins = "*")
 public class CourseController {
+
+    private static final String NAMESPACE = "https://social-insper.com/";
 
     private final CourseService service;
 
@@ -18,9 +23,11 @@ public class CourseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Course create(@RequestBody CreateCourseRequest request) {
-        // TODO (etapa Auth0): pegar o e-mail do JWT e checar se é ADMIN
-        return service.create(request, "admin-temporario@teste.com");
+    public Course create(@AuthenticationPrincipal Jwt jwt,
+                         @RequestBody CreateCourseRequest request) {
+        checkAdmin(jwt);
+        String email = jwt.getClaimAsString(NAMESPACE + "email");
+        return service.create(request, email);
     }
 
     @GetMapping
@@ -30,8 +37,17 @@ public class CourseController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        // TODO (etapa Auth0): checar se é ADMIN
+    public void delete(@AuthenticationPrincipal Jwt jwt,
+                       @PathVariable Long id) {
+        checkAdmin(jwt);
         service.delete(id);
+    }
+
+    private void checkAdmin(Jwt jwt) {
+        List<String> roles = jwt.getClaimAsStringList(NAMESPACE + "roles");
+        if (roles == null || !roles.contains("ADMIN")) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                    "Apenas ADMIN pode executar esta ação");
+        }
     }
 }

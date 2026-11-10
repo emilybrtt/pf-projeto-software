@@ -41,11 +41,10 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Auth0: descomentar na etapa 3 -->
-		<!--   <dependency>-->
-		<!--      <groupId>org.springframework.boot</groupId>-->
-		<!--      <artifactId>spring-boot-starter-security-oauth2-resource-server</artifactId>-->
-		<!--   </dependency>-->
+	   <dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-security-oauth2-resource-server</artifactId>
+	   </dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
