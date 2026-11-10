@@ -1,0 +1,17 @@
+services:
+
+  mongo:
+    image: mongo:7
+    container_name: mongo-cursos
+    ports:
+      - "27017:27017"
+
+  postgres:
+    image: postgres:16
+    container_name: postgres-cursos
+    environment:
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppass
+      POSTGRES_DB: cursos
+    ports:
+      - "5432:5432"
