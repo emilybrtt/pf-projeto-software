@@ -1,4 +1,4 @@
-package br.insper.pf_projeto_software;
+package br.insper.cursos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

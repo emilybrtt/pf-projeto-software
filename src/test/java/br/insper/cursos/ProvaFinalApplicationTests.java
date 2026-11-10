@@ -1,4 +1,4 @@
-package br.insper.pf_projeto_software;
+package br.insper.cursos;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
