@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.insper</groupId>
-	<artifactId>prova-final</artifactId>
+	<artifactId>cursos</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>
@@ -30,34 +30,39 @@
 		<java.version>25</java.version>
 	</properties>
 	<dependencies>
+		<!-- Banco: Postgres -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security-oauth2-resource-server</artifactId>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
 		</dependency>
+
+		<!-- Auth0: descomentar na etapa 3 -->
+		<!--   <dependency>-->
+		<!--      <groupId>org.springframework.boot</groupId>-->
+		<!--      <artifactId>spring-boot-starter-security-oauth2-resource-server</artifactId>-->
+		<!--   </dependency>-->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security-oauth2-resource-server-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+		<!-- Testes -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!--   <dependency>-->
+		<!--      <groupId>org.springframework.boot</groupId>-->
+		<!--      <artifactId>spring-boot-starter-security-oauth2-resource-server-test</artifactId>-->
+		<!--      <scope>test</scope>-->
+		<!--   </dependency>-->
 	</dependencies>
 
 	<build>
