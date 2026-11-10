@@ -15,7 +15,7 @@ public class Course {
     private String name;
     private String instructor;
     private LocalDateTime createdAt;
-    private Coursestatus status;
+    private CourseStatus status;
     private String adminEmail;
 
     public Course() {}
@@ -26,7 +26,7 @@ public class Course {
         this.instructor = instructor;
         this.adminEmail = adminEmail;
         this.createdAt = LocalDateTime.now();
-        this.status = Coursestatus.DISPONIVEL;
+        this.status = CourseStatus.DISPONIVEL;
     }
 
     public String getId() { return id; }
@@ -34,8 +34,8 @@ public class Course {
     public String getName() { return name; }
     public String getInstructor() { return instructor; }
     public LocalDateTime getCreatedAt() { return createdAt; }
-    public Coursestatus getStatus() { return status; }
+    public CourseStatus getStatus() { return status; }
     public String getAdminEmail() { return adminEmail; }
 
-    public void setStatus(Coursestatus status) { this.status = status; }
+    public void setStatus(CourseStatus status) { this.status = status; }
 }

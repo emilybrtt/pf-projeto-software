@@ -1,6 +1,6 @@
 package br.insper.cursos.courses;
 
-public record Createcourserequest(
+public record CreateCourseRequest(
         String code,
         String name,
         String instructor

@@ -7,15 +7,15 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
-public class Courseservice {
+public class CourseService {
 
-    private final Courserepository repository;
+    private final CourseRepository repository;
 
-    public Courseservice(Courserepository repository) {
+    public CourseService(CourseRepository repository) {
         this.repository = repository;
     }
 
-    public Course create(Createcourserequest request, String adminEmail) {
+    public Course create(CreateCourseRequest request, String adminEmail) {
         Course course = new Course(
                 request.code(),
                 request.name(),

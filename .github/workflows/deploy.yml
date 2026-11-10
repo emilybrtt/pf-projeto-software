@@ -1,0 +1,54 @@
+name: Deploy automatico
+
+on:
+  push:
+    branches: ["main"]
+
+env:
+  DOCKER_IMAGE: emilybrtt/pf
+  CONTAINER_NAME: pf
+  DOCKER_USER: emilybrtt
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKER_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_TEST }}
+          username: ubuntu
+          key: ${{ secrets.KEY_TEST }}
+          port: 22
+          script: |
+            docker stop ${{ env.CONTAINER_NAME }} || true
+            docker rm ${{ env.CONTAINER_NAME }} || true
+
+            docker run -d \
+              -p 8080:8080 \
+              -e DB_HOST=mongo-pf \
+              --network=rede \
+              --restart unless-stopped \
+              --name ${{ env.CONTAINER_NAME }} \
+              ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
