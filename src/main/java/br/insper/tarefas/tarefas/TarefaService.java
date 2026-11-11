@@ -21,7 +21,7 @@ public class TarefaService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "prioridade deve estar entre 1 e 5");
         }
 
-        Tarefa tarefa = new Tarefa(request.titulo(), request.descricao(), request.prioridade(), emailResponsavel);
+        Tarefa tarefa = new Tarefa(request.titulo(), request.descricao(), request.prioridade(), request.emailResponsavel());
         return repository.save(tarefa);
     }
 

@@ -24,7 +24,7 @@ public class TarefaServiceTests {
 
     @Test
     public void test_shouldCreateTarefaWhenPrioridadeIsValid() {
-        CreateTarefaRequestDTO dto = new CreateTarefaRequestDTO("Revisar PR", "Fazer a revisão", 3);
+        CreateTarefaRequestDTO dto = new CreateTarefaRequestDTO("Revisar PR", "Fazer a revisão", 3, "resp@insper.edu.br");
         Tarefa tarefa = new Tarefa(dto.titulo(), dto.descricao(), dto.prioridade(), "resp@insper.edu.br");
 
         Mockito.when(tarefaRepository.save(Mockito.any()))
@@ -38,7 +38,7 @@ public class TarefaServiceTests {
 
     @Test
     public void test_shouldThrowBadRequestWhenPrioridadeIsAboveFive() {
-        CreateTarefaRequestDTO dto = new CreateTarefaRequestDTO("Revisar PR", "Fazer revisão",6);
+        CreateTarefaRequestDTO dto = new CreateTarefaRequestDTO("Revisar PR", "Fazer revisão",6, "resp@insper.edu.br");
 
         ResponseStatusException exception = Assertions.assertThrows(
                 ResponseStatusException.class,
@@ -49,7 +49,7 @@ public class TarefaServiceTests {
 
     @Test
     public void test_shouldThrowBadRequestWhenPrioridadeIsZero() {
-        CreateTarefaRequestDTO dto = new CreateTarefaRequestDTO("Revisar PR", "Fazer revisão do PR",0);
+        CreateTarefaRequestDTO dto = new CreateTarefaRequestDTO("Revisar PR", "Fazer revisão do PR",0, "resp@insper.edu.br");
 
         ResponseStatusException exception = Assertions.assertThrows(
                 ResponseStatusException.class,
