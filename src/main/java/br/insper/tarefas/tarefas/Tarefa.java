@@ -33,4 +33,8 @@ public class Tarefa {
         this.concluida = false;
         this.dataCriacao = LocalDateTime.now();
     }
+
+    public String getEmailResponsavel() {
+        return emailResponsavel;
+    }
 }

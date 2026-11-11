@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 public record TarefaResponseDTO(
         Long id,
         String titulo,
+        String descricao,
         Integer prioridade,
         Boolean concluida,
         LocalDateTime dataCriacao,
@@ -16,6 +17,7 @@ public record TarefaResponseDTO(
         return new TarefaResponseDTO(
                 tarefa.getId(),
                 tarefa.getTitulo(),
+                tarefa.getDescricao(),
                 tarefa.getPrioridade(),
                 tarefa.getConcluida(),
                 tarefa.getDataCriacao(),
