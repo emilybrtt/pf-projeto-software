@@ -22,15 +22,4 @@ public class Tarefa {
     private String emailResponsavel;
     private Boolean concluida;
     private LocalDateTime dataCriacao;
-
-    public Tarefa() {}
-
-    public Tarefa(String titulo, String descricao, Integer prioridade, String emailResponsavel) {
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.prioridade = prioridade;
-        this.emailResponsavel = emailResponsavel;
-        this.concluida = false;
-        this.dataCriacao = LocalDateTime.now();
-    }
 }
