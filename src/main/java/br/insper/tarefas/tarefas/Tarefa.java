@@ -34,7 +34,10 @@ public class Tarefa {
         this.dataCriacao = LocalDateTime.now();
     }
 
-    public String getEmailResponsavel() {
-        return emailResponsavel;
-    }
+    public String getTitulo() {return titulo;}
+    public String getDescricao() {return descricao;}
+    public Integer getPrioridade() {return prioridade;}
+    public String getEmailResponsavel() {return emailResponsavel;}
+    public Boolean getConcluida() {return concluida;}
+    public LocalDateTime getDataCriacao() {return dataCriacao;}
 }
