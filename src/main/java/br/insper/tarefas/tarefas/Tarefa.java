@@ -34,6 +34,7 @@ public class Tarefa {
         this.dataCriacao = LocalDateTime.now();
     }
 
+    public Long getId() {return id;}
     public String getTitulo() {return titulo;}
     public String getDescricao() {return descricao;}
     public Integer getPrioridade() {return prioridade;}
