@@ -27,7 +27,7 @@ public class TarefaController {
     @ResponseStatus(HttpStatus.CREATED)
     public TarefaResponseDTO create(@AuthenticationPrincipal Jwt jwt,
                                     @RequestBody CreateTarefaRequestDTO request) {
-        checkAdmin(jwt);
+
         String email = jwt.getClaimAsString(NAMESPACE + "email");
         Tarefa tarefa = service.create(request, email);
         return TarefaResponseDTO.from(tarefa);
