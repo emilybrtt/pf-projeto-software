@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Material de aula / repos de exemplo ###
+/repos-de-aula/
+/info/
+
+### Relatórios gerados ###
+/tests/
