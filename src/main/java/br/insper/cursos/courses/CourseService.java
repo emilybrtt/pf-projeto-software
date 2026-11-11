@@ -35,18 +35,29 @@ public class CourseService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Curso não encontrado"));
     }
 
-    public Course requestDelete(Long id) {
+    // ---- Delete ativo: soft delete simples (uma etapa, só ADMIN) ----
+    public Course softDelete(Long id) {
         Course course = getById(id);
-        course.setStatus(CourseStatus.EXCLUSAO_PENDENTE);
+        course.setStatus(CourseStatus.EXCLUIDO);
         return repository.save(course);
     }
 
-    public void approveDelete(Long id) {
-        Course course = getById(id);
-        if (course.getStatus() != CourseStatus.EXCLUSAO_PENDENTE) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Curso não possui solicitação de exclusão pendente");
-        }
-        repository.deleteById(id);
-    }
+    // ---- Versão alternativa: delete em duas etapas com aprovação do admin ----
+    // Se a prova pedir esse fluxo: comente o softDelete acima e descomente os dois
+    // métodos abaixo (e o trecho equivalente no CourseController).
+    //
+    // public Course requestDelete(Long id) {
+    //     Course course = getById(id);
+    //     course.setStatus(CourseStatus.EXCLUSAO_PENDENTE);
+    //     return repository.save(course);
+    // }
+    //
+    // public void approveDelete(Long id) {
+    //     Course course = getById(id);
+    //     if (course.getStatus() != CourseStatus.EXCLUSAO_PENDENTE) {
+    //         throw new ResponseStatusException(HttpStatus.CONFLICT,
+    //                 "Curso não possui solicitação de exclusão pendente");
+    //     }
+    //     repository.deleteById(id);
+    // }
 }

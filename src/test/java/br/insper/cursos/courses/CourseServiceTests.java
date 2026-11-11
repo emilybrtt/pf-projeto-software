@@ -21,8 +21,10 @@ public class CourseServiceTests {
     @Mock
     private CourseRepository courseRepository;
 
+    // ---- Delete ativo: soft delete simples ----
+
     @Test
-    public void test_shouldSetStatusToExclusaoPendenteWhenRequestDelete() {
+    public void test_shouldSetStatusToExcluidoWhenSoftDelete() {
         Course course = new Course("CC101", "Introdução à Computação", "Prof. Fulano", "admin@insper.edu.br");
 
         Mockito.when(courseRepository.findById(1L))
@@ -30,61 +32,93 @@ public class CourseServiceTests {
         Mockito.when(courseRepository.save(Mockito.any()))
                 .thenReturn(course);
 
-        Course response = courseService.requestDelete(1L);
+        Course response = courseService.softDelete(1L);
 
-        Assertions.assertEquals(CourseStatus.EXCLUSAO_PENDENTE, response.getStatus());
+        Assertions.assertEquals(CourseStatus.EXCLUIDO, response.getStatus());
         Mockito.verify(courseRepository).save(course);
     }
 
     @Test
-    public void test_shouldThrowNotFoundWhenRequestDeleteCourseDoesNotExist() {
+    public void test_shouldThrowNotFoundWhenSoftDeleteCourseDoesNotExist() {
         Mockito.when(courseRepository.findById(1L))
                 .thenReturn(Optional.empty());
 
         ResponseStatusException exception = Assertions.assertThrows(
                 ResponseStatusException.class,
-                () -> courseService.requestDelete(1L));
+                () -> courseService.softDelete(1L));
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
     }
 
-    @Test
-    public void test_shouldDeleteCourseWhenApproveDeleteAndStatusIsExclusaoPendente() {
-        Course course = new Course("CC101", "Introdução à Computação", "Prof. Fulano", "admin@insper.edu.br");
-        course.setStatus(CourseStatus.EXCLUSAO_PENDENTE);
-
-        Mockito.when(courseRepository.findById(1L))
-                .thenReturn(Optional.of(course));
-
-        courseService.approveDelete(1L);
-
-        Mockito.verify(courseRepository).deleteById(1L);
-    }
-
-    @Test
-    public void test_shouldThrowConflictWhenApproveDeleteAndStatusIsNotPending() {
-        Course course = new Course("CC101", "Introdução à Computação", "Prof. Fulano", "admin@insper.edu.br");
-
-        Mockito.when(courseRepository.findById(1L))
-                .thenReturn(Optional.of(course));
-
-        ResponseStatusException exception = Assertions.assertThrows(
-                ResponseStatusException.class,
-                () -> courseService.approveDelete(1L));
-
-        Assertions.assertEquals(HttpStatus.CONFLICT, exception.getStatusCode());
-        Mockito.verify(courseRepository, Mockito.never()).deleteById(Mockito.any());
-    }
-
-    @Test
-    public void test_shouldThrowNotFoundWhenApproveDeleteCourseDoesNotExist() {
-        Mockito.when(courseRepository.findById(1L))
-                .thenReturn(Optional.empty());
-
-        ResponseStatusException exception = Assertions.assertThrows(
-                ResponseStatusException.class,
-                () -> courseService.approveDelete(1L));
-
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
-    }
+    // ---- Versão alternativa: delete em duas etapas com aprovação do admin ----
+    // Se descomentar requestDelete/approveDelete no CourseService, descomente os
+    // testes abaixo também (e comente os dois de soft delete acima, se quiser
+    // evitar sobreposição de cobertura).
+    //
+    // @Test
+    // public void test_shouldSetStatusToExclusaoPendenteWhenRequestDelete() {
+    //     Course course = new Course("CC101", "Introdução à Computação", "Prof. Fulano", "admin@insper.edu.br");
+    //
+    //     Mockito.when(courseRepository.findById(1L))
+    //             .thenReturn(Optional.of(course));
+    //     Mockito.when(courseRepository.save(Mockito.any()))
+    //             .thenReturn(course);
+    //
+    //     Course response = courseService.requestDelete(1L);
+    //
+    //     Assertions.assertEquals(CourseStatus.EXCLUSAO_PENDENTE, response.getStatus());
+    //     Mockito.verify(courseRepository).save(course);
+    // }
+    //
+    // @Test
+    // public void test_shouldThrowNotFoundWhenRequestDeleteCourseDoesNotExist() {
+    //     Mockito.when(courseRepository.findById(1L))
+    //             .thenReturn(Optional.empty());
+    //
+    //     ResponseStatusException exception = Assertions.assertThrows(
+    //             ResponseStatusException.class,
+    //             () -> courseService.requestDelete(1L));
+    //
+    //     Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+    // }
+    //
+    // @Test
+    // public void test_shouldDeleteCourseWhenApproveDeleteAndStatusIsExclusaoPendente() {
+    //     Course course = new Course("CC101", "Introdução à Computação", "Prof. Fulano", "admin@insper.edu.br");
+    //     course.setStatus(CourseStatus.EXCLUSAO_PENDENTE);
+    //
+    //     Mockito.when(courseRepository.findById(1L))
+    //             .thenReturn(Optional.of(course));
+    //
+    //     courseService.approveDelete(1L);
+    //
+    //     Mockito.verify(courseRepository).deleteById(1L);
+    // }
+    //
+    // @Test
+    // public void test_shouldThrowConflictWhenApproveDeleteAndStatusIsNotPending() {
+    //     Course course = new Course("CC101", "Introdução à Computação", "Prof. Fulano", "admin@insper.edu.br");
+    //
+    //     Mockito.when(courseRepository.findById(1L))
+    //             .thenReturn(Optional.of(course));
+    //
+    //     ResponseStatusException exception = Assertions.assertThrows(
+    //             ResponseStatusException.class,
+    //             () -> courseService.approveDelete(1L));
+    //
+    //     Assertions.assertEquals(HttpStatus.CONFLICT, exception.getStatusCode());
+    //     Mockito.verify(courseRepository, Mockito.never()).deleteById(Mockito.any());
+    // }
+    //
+    // @Test
+    // public void test_shouldThrowNotFoundWhenApproveDeleteCourseDoesNotExist() {
+    //     Mockito.when(courseRepository.findById(1L))
+    //             .thenReturn(Optional.empty());
+    //
+    //     ResponseStatusException exception = Assertions.assertThrows(
+    //             ResponseStatusException.class,
+    //             () -> courseService.approveDelete(1L));
+    //
+    //     Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+    // }
 }

@@ -64,7 +64,7 @@
 			}
 		},
 		{
-			"name": "Request Delete Course",
+			"name": "Delete Course (ADMIN)",
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -73,21 +73,40 @@
 					"host": ["{{base_url}}"],
 					"path": ["courses", "{{course_id}}"]
 				},
-				"description": "Qualquer usuário autenticado. Marca o curso como EXCLUSAO_PENDENTE (não apaga ainda). Retorna 202 com o curso atualizado, ou 404 se não existir."
+				"description": "Requer claim roles contendo ADMIN no JWT. Soft delete: marca o curso como EXCLUIDO. Retorna 204, ou 404 se não existir."
 			}
 		},
 		{
-			"name": "Approve Delete Course (ADMIN)",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/courses/{{course_id}}/approve-delete",
-					"host": ["{{base_url}}"],
-					"path": ["courses", "{{course_id}}", "approve-delete"]
+			"name": "Alternativa - Delete em 2 etapas (requer descomentar no código)",
+			"description": "Essas duas requests só funcionam se o fluxo de delete com aprovação do admin (requestDelete/approveDelete) estiver descomentado em CourseService e CourseController, no lugar do soft delete simples.",
+			"item": [
+				{
+					"name": "Request Delete Course",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/courses/{{course_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["courses", "{{course_id}}"]
+						},
+						"description": "Qualquer usuário autenticado. Marca o curso como EXCLUSAO_PENDENTE (não apaga ainda). Retorna 202 com o curso atualizado, ou 404 se não existir."
+					}
 				},
-				"description": "Requer claim roles contendo ADMIN no JWT. Exclui de fato o curso. Retorna 204, 404 se não existir, ou 409 se o curso não estiver EXCLUSAO_PENDENTE."
-			}
+				{
+					"name": "Approve Delete Course (ADMIN)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/courses/{{course_id}}/approve-delete",
+							"host": ["{{base_url}}"],
+							"path": ["courses", "{{course_id}}", "approve-delete"]
+						},
+						"description": "Requer claim roles contendo ADMIN no JWT. Exclui de fato o curso. Retorna 204, 404 se não existir, ou 409 se o curso não estiver EXCLUSAO_PENDENTE."
+					}
+				}
+			]
 		},
 		{
 			"name": "Swagger UI",

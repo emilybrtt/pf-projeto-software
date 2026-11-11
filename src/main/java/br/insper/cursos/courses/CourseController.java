@@ -45,19 +45,32 @@ public class CourseController {
         return CourseResponseDTO.from(service.getById(id));
     }
 
+    // ---- Delete ativo: soft delete simples (uma etapa, só ADMIN) ----
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public CourseResponseDTO requestDelete(@PathVariable Long id) {
-        return CourseResponseDTO.from(service.requestDelete(id));
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@AuthenticationPrincipal Jwt jwt,
+                        @PathVariable Long id) {
+        checkAdmin(jwt);
+        service.softDelete(id);
     }
 
-    @PostMapping("/{id}/approve-delete")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void approveDelete(@AuthenticationPrincipal Jwt jwt,
-                               @PathVariable Long id) {
-        checkAdmin(jwt);
-        service.approveDelete(id);
-    }
+    // ---- Versão alternativa: delete em duas etapas com aprovação do admin ----
+    // Se a prova pedir esse fluxo: comente o método delete() acima e descomente
+    // os dois métodos abaixo (e o trecho equivalente no CourseService).
+    //
+    // @DeleteMapping("/{id}")
+    // @ResponseStatus(HttpStatus.ACCEPTED)
+    // public CourseResponseDTO requestDelete(@PathVariable Long id) {
+    //     return CourseResponseDTO.from(service.requestDelete(id));
+    // }
+    //
+    // @PostMapping("/{id}/approve-delete")
+    // @ResponseStatus(HttpStatus.NO_CONTENT)
+    // public void approveDelete(@AuthenticationPrincipal Jwt jwt,
+    //                            @PathVariable Long id) {
+    //     checkAdmin(jwt);
+    //     service.approveDelete(id);
+    // }
 
     private void checkAdmin(Jwt jwt) {
         List<String> roles = jwt.getClaimAsStringList(NAMESPACE + "roles");
