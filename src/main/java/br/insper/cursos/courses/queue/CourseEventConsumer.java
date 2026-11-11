@@ -11,7 +11,11 @@ import org.springframework.stereotype.Component;
 // Aqui só loga a mensagem recebida — não existe nenhuma regra de negócio real
 // acoplada a isso ainda. Se precisar fazer algo de fato (enviar email, notificar
 // outro serviço, etc.), é dentro do método consume() que entraria essa lógica.
-@Component
+//
+// DESATIVADO junto com CourseEventProducer/RedisConfig (erro de conexão com
+// Redis na EC2). @Component comentado para o Spring não criar este bean nem
+// agendar o polling. Ver QUEUE_EC2_SETUP.md para reativar na EC2.
+// @Component
 public class CourseEventConsumer {
 
     private static final Logger logger = LoggerFactory.getLogger(CourseEventConsumer.class);

@@ -35,6 +35,8 @@ build/
 ### Material de aula / repos de exemplo ###
 /repos-de-aula/
 /info/
+/variantes/
+/help/
 
 ### Relatórios gerados ###
 /tests/

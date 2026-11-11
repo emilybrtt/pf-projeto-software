@@ -15,7 +15,13 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 // Configuração de conexão com o Redis. Usado hoje só pela fila em
 // br.insper.cursos.courses.queue (CourseEventProducer/Consumer).
 // Se remover a fila, pode remover esta classe também (ver nota no fim do arquivo).
-@Configuration
+//
+// DESATIVADO: estava dando erro na EC2 porque não há um Redis acessível lá
+// (connection refused ao tentar conectar em REDIS_HOST/REDIS_PORT). Comentado
+// o @Configuration abaixo pra essa classe parar de ser lida pelo component scan
+// do Spring — nenhum bean de Redis é criado, então ninguém tenta conectar.
+// Ver QUEUE_EC2_SETUP.md na raiz do pf-back para como reativar isso na EC2.
+// @Configuration
 public class RedisConfig {
 
     // Lidos de application.properties: redis.host / redis.port

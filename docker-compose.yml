@@ -16,8 +16,10 @@ services:
     ports:
       - "5432:5432"
 
-  redis:
-    image: redis:latest
-    container_name: redis-pf
-    ports:
-      - "6379:6379"
+  # Fila/Redis desativada (erro de conexão na EC2). Ver QUEUE_EC2_SETUP.md
+  # na raiz do pf-back para como reativar isso na EC2.
+  # redis:
+  #   image: redis:latest
+  #   container_name: redis-pf
+  #   ports:
+  #     - "6379:6379"
