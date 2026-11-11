@@ -2,5 +2,6 @@ package br.insper.cursos.courses;
 
 public enum CourseStatus {
     DISPONIVEL,
-    CANCELADO
+    CANCELADO,
+    EXCLUSAO_PENDENTE
 }
