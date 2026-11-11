@@ -11,7 +11,12 @@ import java.time.LocalDateTime;
 // Quem produz (publica) mensagens na fila. Chamado pelo CourseService depois de
 // criar ou excluir (soft delete) um curso. Quem consome é o CourseEventConsumer
 // (dentro deste mesmo projeto, no padrão do professor seria um worker separado).
-@Service
+//
+// DESATIVADO: fila de Redis desligada (dava erro de conexão na EC2, não há
+// Redis acessível lá). @Service comentado para o Spring não instanciar esta
+// classe nem tentar injetar o StringRedisTemplate (cujo bean também está
+// desativado em RedisConfig). Ver QUEUE_EC2_SETUP.md para reativar na EC2.
+// @Service
 public class CourseEventProducer {
 
     private static final Logger logger = LoggerFactory.getLogger(CourseEventProducer.class);
