@@ -1,4 +1,4 @@
-package br.insper.cursos.exception;
+package br.insper.tarefas.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;

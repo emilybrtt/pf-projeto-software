@@ -1,4 +1,4 @@
-package br.insper.cursos.exception;
+package br.insper.tarefas.exception;
 
 import org.springframework.http.HttpStatus;
 

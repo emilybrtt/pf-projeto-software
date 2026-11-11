@@ -1,30 +1,23 @@
-# SIMULADO — REDAÇÃO
+# PROVA FINAL - PROJETO DE SOFTWARE
+Desenvolver um sistema de gerenciamento de tarefas de um projeto.
 
-# Sistema de Cursos
+## Descrição: 
+Um sistema onde os usuários podem criar e gerenciar tarefas de um projeto.
 
-Uma API de cursos em uma universidade. Todas as rotas são autenticadas pelo Auth0, existem dois papeis na aplicação, ADMIN e USER,
+## Rotas:
+- POST /tarefa: Cria uma nova tarefa dentro de um projeto com os dados: título, descrição, prioridade da tarefa e e-mail do usuário que criou a tarefa.
+- DELETE /tarefa: Deleta uma tarefa
+- GET /tarefa: Lista todas as tarefas.
 
-## Rotas
+Todas as requisições nessa aplicação devem ser autenticadas usando o Auth0.
+Usar um banco de dados Postgres.
+Além das rotas, desenvolver também um front com as funcionalidades de criar, deletar e listar as tarefas. Por último, fazer deploy da aplicação do Back-End na sua máquina da AWS e o front na Vercel com o proxy para a chamada do back.
 
-- POST /courses - cadastrar curso (ADMIN)
-- GET /courses - listar cursos (ADMIN e USER)
-- DELETE /courses/{id} - Deletar um curso (apenas ADMIN)
+## Avaliação:
+Back-End (2 pontos)
+Front-End (2 pontos)
+Autenticação. (2 pontos)
+Deploy na AWS. (2 pontos)
+Deploy na Vercel. (2 pontos)
 
-## Entidade
-
-- Dados
-  - id
-  - código do curso
-  - nome do curso
-  - nome do instrutor
-  - data cadastro
-  - status (DISPONIVEL, CANCELADO) -> Usar Enum
-  - e-mail do ADMIN que cadastrou o curso
-
-## Front-End
-
-- Implemente um Front-end que lista todos os cursos e permite o cadastro e a exclusão de cursos.
-- Se o usuário tiver o papel de USER, ele apenas pode ver os cursos.
-- Se o usuário tiver o papel de ADMIN, ele pode ver os cursos, cadastrar novos ou deletar cursos.
-
-Envie os repositórios do Front e do Back
+Enviar os links para os repositórios dos projetos e o link para a aplicação no vercel.
