@@ -2,6 +2,7 @@ package br.insper.cursos.courses;
 
 import br.insper.cursos.courses.dto.CourseResponseDTO;
 import br.insper.cursos.courses.dto.CreateCourseRequestDTO;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -26,7 +27,7 @@ public class CourseController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CourseResponseDTO create(@AuthenticationPrincipal Jwt jwt,
-                         @RequestBody CreateCourseRequestDTO request) {
+                         @Valid @RequestBody CreateCourseRequestDTO request) {
         checkAdmin(jwt);
         String email = jwt.getClaimAsString(NAMESPACE + "email");
         Course course = service.create(request, email);

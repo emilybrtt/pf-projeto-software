@@ -1,5 +1,6 @@
 package br.insper.cursos.courses;
 
+import br.insper.cursos.courses.queue.CourseEventProducer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +21,9 @@ public class CourseServiceTests {
 
     @Mock
     private CourseRepository courseRepository;
+
+    @Mock
+    private CourseEventProducer eventProducer;
 
     // ---- Delete ativo: soft delete simples ----
 

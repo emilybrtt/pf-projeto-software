@@ -15,3 +15,9 @@ services:
       POSTGRES_DB: pf
     ports:
       - "5432:5432"
+
+  redis:
+    image: redis:latest
+    container_name: redis-pf
+    ports:
+      - "6379:6379"
