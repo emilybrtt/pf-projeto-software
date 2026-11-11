@@ -1,0 +1,50 @@
+{
+	"info": {
+		"name": "Tarefas API",
+		"description": "Collection para a variante Tarefas (ver enunciado.md nesta pasta).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }]
+	},
+	"item": [
+		{
+			"name": "Create Tarefa (ADMIN)",
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": { "mode": "raw", "raw": "{\n  \"titulo\": \"Revisar PR\",\n  \"prioridade\": 3\n}" },
+				"url": { "raw": "{{base_url}}/tarefas", "host": ["{{base_url}}"], "path": ["tarefas"] },
+				"description": "Requer ADMIN. prioridade entre 1 e 5, senão 400."
+			}
+		},
+		{
+			"name": "List Tarefas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": { "raw": "{{base_url}}/tarefas", "host": ["{{base_url}}"], "path": ["tarefas"] },
+				"description": "Qualquer autenticado."
+			}
+		},
+		{
+			"name": "Delete Tarefa (ADMIN)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": { "raw": "{{base_url}}/tarefas/{{tarefa_id}}", "host": ["{{base_url}}"], "path": ["tarefas", "{{tarefa_id}}"] },
+				"description": "Requer ADMIN. 404 se não existir."
+			}
+		},
+		{
+			"name": "Swagger UI",
+			"request": {
+				"auth": { "type": "noauth" },
+				"method": "GET",
+				"header": [],
+				"url": { "raw": "{{base_url}}/swagger-ui/index.html", "host": ["{{base_url}}"], "path": ["swagger-ui", "index.html"] }
+			}
+		}
+	]
+}

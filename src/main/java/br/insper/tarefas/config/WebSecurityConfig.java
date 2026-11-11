@@ -1,4 +1,4 @@
-package br.insper.cursos.config;
+package br.insper.tarefas.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
